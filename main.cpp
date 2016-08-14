@@ -17,7 +17,7 @@ void nspISR() {
 int main(int argc, const char* argv[]) {
 
 	wiringPiSetup();
-	piHiPri(50);
+	piHiPri(100);
 
 	pinMode(NSP_PIN, INPUT);
 	pullUpDnControl(NSP_PIN, PUD_UP);

@@ -16,13 +16,13 @@ using namespace std::chrono;
 // 	- stop:	 2000 us (1900..2100)
 
 #define START_MIN		4000
-#define START_MAX		6000
+#define START_MAX		7000
 
-#define BIT0_MIN		200
-#define BIT0_MAX		500
+#define BIT0_MIN		250
+#define BIT0_MAX		649
 
-#define BIT1_MIN		600
-#define BIT1_MAX		900
+#define BIT1_MIN		650
+#define BIT1_MAX		1100
 
 #define STOP_MIN		1900
 #define STOP_MAX		2100
@@ -65,25 +65,22 @@ void RntNsp::tick(int state) {
 	uint64_t diff = (tick - lastTick);
 	lastTick = tick;
 
-	uint32_t err=0;
-
 	if(state == 0) return;
 
 	if((diff >= START_MIN) && (diff <= START_MAX)) {
-		if(by != 0) { errFrame++; err++;}
+		if(by != 0) errFrame++;
 		bi = 0;
 		by = 0;
 		memset(buf, 0, sizeof(buf));
+		res = true;
+		return;
 	} else if((diff >= BIT0_MIN) && (diff <= BIT0_MAX)) {
-		bi++;
+		if(res==true) bi++;
 	} else if((diff >= BIT1_MIN) && (diff <= BIT1_MAX)) {
-		buf[by] |= (1<<bi);
-		bi++;
-	} else {
+		if(res==true) {buf[by] |= (1<<bi); bi++;};
+	} else if(res==true) {
 		errTime++;
-		err++;
-		bi = 0;
-		by = 10;
+		res = false;
 	}
 
 
@@ -94,10 +91,20 @@ void RntNsp::tick(int state) {
 
 	if(by == 10) {
 
-		if(err==0) {
- 			if((buf[0] != '$') || (buf[9] != '#')) errHeader++;
-			else if(err==0) if(buf[8] != crc8(buf, 8)) errCrc++;
+		frame++;
+		system ("clear");
+                cout<<"Frame: "<<frame<<", ";
+
+		bool ok = true;
+
+		if((buf[0] != '$') || (buf[9] != '#')) {
+			errHeader++;
+			ok = false;
+		} else if(buf[8] != crc8(buf, 8)) {
+			errCrc++;
+			ok = false;
 		}
+
 
 		int16_t temp = buf[4];
 		temp <<= 8;
@@ -111,16 +118,15 @@ void RntNsp::tick(int state) {
 
 		bi = 0;
 		by = 0;
+		res = false;
 		memset(buf, 0, sizeof(buf));
 
-		system ("clear");
-		cout<<"Frame: "<<++frame<<endl;
-		cout<<"T: "<<(temp/10)<<"."<<(temp%10)<<" °C"<<endl;
-		cout<<"H: "<<(rh/10)<<"."<<(rh%10)<<" %"<<endl;
 		uint32_t total = (errTime+errFrame+errHeader+errCrc);
 		float proc = (total * 10000)/frame;
 		proc /= 100;
 		cout<<"Errors: "<<total<<" ("<<proc<<" %)"<<" (Time: "<<errTime<<" Frame: "<<errFrame<<" Header: "<<errHeader<<" Crc: "<<errCrc<<")"<<endl;
+                if(ok) cout<<"T: "<<(temp/10)<<"."<<(temp%10)<<" °C"<<endl;
+                if(ok) cout<<"H: "<<(rh/10)<<"."<<(rh%10)<<" %"<<endl;
 	}
 
 }
