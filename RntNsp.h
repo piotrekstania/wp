@@ -23,6 +23,16 @@ class RntNsp {
 		uint64_t rhTs;
 		uint64_t ahTs;
 
+		uint32_t bi;
+		uint32_t by;
+		uint8_t buf[10];
+		uint32_t errTime;
+		uint32_t errFrame;
+		uint32_t errHeader;
+		uint32_t errCrc;
+		uint32_t frame;
+
+		bool res;
 	public:
 		enum Edge  {EdgeFall, EdgeRise};
 		enum Param {ParamTemp, ParamRH, ParamAH, ParamPress, ParamHPPL};

@@ -1,3 +1,4 @@
+#include <unistd.h>
 #include <wiringPi.h>
 #include "RntNsp.h"
 #include <iostream>
@@ -16,12 +17,12 @@ void nspISR() {
 int main(int argc, const char* argv[]) {
 
 	wiringPiSetup();
-	piHiPri(99);
+	piHiPri(50);
 
 	pinMode(NSP_PIN, INPUT);
 	pullUpDnControl(NSP_PIN, PUD_UP);
 	wiringPiISR(NSP_PIN, INT_EDGE_BOTH, &nspISR);
 
-	delay(100000);
+	pause();
 	return 0;
 }
