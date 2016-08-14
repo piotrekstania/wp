@@ -3,19 +3,46 @@
 
 #include <cstdint>
 
+//  errory:
+//  - niewlasciwa dlugosc impulsu
+//  - niewlasciwa dlugosc ramki
+//  - niewlasciwe znaki poczatku i konca ramki
+//  - błąd sumy kontrolnej
+//
+//  wspolne:
+//  - maksymalny czas od ostanio dobrze odebranwgo parametru
+//
+// osobne:
+// - parametru
+// - timestamp parametru
+// - dopuszczalny zakres
+//
+// funkcje:
+// - tick
+// - getParam
+// - isValid
+// - setRange
+// - getError
+// - getLastTime
+
 class RntNsp {
 
 	private:
+
+		typedef struct {
+			int16_t value;
+			int16_t min;
+			int16_t max;
+			uint64_t timestamp;
+		} Param;
+
 		uint64_t lastTick;
 
-		uint8_t bit;
-		uint8_t byte;
-
-		int32_t press;
-		int32_t temp;
-		int32_t hppl;
-		int32_t rh;
-		int32_t ah;
+		Param pressure;
+		Param temperature;
+		Param hppl;
+		Param rh;
+		Param ah;
 
 		uint64_t pressTs;
 		uint64_t tempTs;
