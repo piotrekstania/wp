@@ -65,11 +65,12 @@ void RntNsp::tick(int state) {
 	uint64_t diff = (tick - lastTick);
 	lastTick = tick;
 
+	uint32_t err=0;
 
 	if(state == 0) return;
 
 	if((diff >= START_MIN) && (diff <= START_MAX)) {
-		if(by != 0) errFrame++;
+		if(by != 0) { errFrame++; err++;}
 		bi = 0;
 		by = 0;
 		memset(buf, 0, sizeof(buf));
@@ -80,6 +81,7 @@ void RntNsp::tick(int state) {
 		bi++;
 	} else {
 		errTime++;
+		err++;
 		bi = 0;
 		by = 10;
 	}
@@ -91,8 +93,11 @@ void RntNsp::tick(int state) {
 	}
 
 	if(by == 10) {
-		if((buf[0] != '$') || (buf[9] != '#')) errHeader++;
-		if(buf[8] != crc8(buf, 8)) errCrc++;
+
+		if(err==0) {
+ 			if((buf[0] != '$') || (buf[9] != '#')) errHeader++;
+			else if(err==0) if(buf[8] != crc8(buf, 8)) errCrc++;
+		}
 
 		int16_t temp = buf[4];
 		temp <<= 8;
@@ -112,7 +117,7 @@ void RntNsp::tick(int state) {
 		cout<<"Frame: "<<++frame<<endl;
 		cout<<"T: "<<(temp/10)<<"."<<(temp%10)<<" °C"<<endl;
 		cout<<"H: "<<(rh/10)<<"."<<(rh%10)<<" %"<<endl;
-		cout<<"Errors:"<<" Time: "<<errTime<<" Frame: "<<errFrame<<" Header: "<<errHeader<<" Crc: "<<errCrc<<endl;
+		cout<<"Errors: "<<(errTime+errFrame+errHeader+errCrc)<<" ("<<((errTime+errFrame+errHeader+errCrc)*100)/frame<<" %)"<<" (Time: "<<errTime<<" Frame: "<<errFrame<<" Header: "<<errHeader<<" Crc: "<<errCrc<<")"<<endl;
 	}
 
 }
