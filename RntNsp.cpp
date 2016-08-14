@@ -17,7 +17,7 @@ uint8_t crc8(uint8_t *buffer, uint8_t size);
 // 	- stop:	 2000 us (1900..2100)
 
 #define START_MIN		4000
-#define START_MAX		7000
+#define START_MAX		6000
 
 #define BIT0_MIN		250
 #define BIT0_MAX		649
