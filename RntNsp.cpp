@@ -8,6 +8,7 @@
 using namespace std;
 using namespace std::chrono;
 
+uint8_t crc8(uint8_t *buffer, uint8_t size);
 
 // Ramka +/- 100 us:
 // 	- start: 4000 us (3900..4100)
@@ -27,38 +28,6 @@ using namespace std::chrono;
 #define STOP_MIN		1900
 #define STOP_MAX		2100
 
-uint8_t crc8(uint8_t *buffer, uint8_t size) {
-	
-	uint8_t	 crc = 0;
-	uint8_t loop_count;
-	uint8_t  bit_counter;
-	uint8_t  data;
-	uint8_t  feedback_bit;
-
-	for (loop_count = 0; loop_count != size; loop_count++)
-	{
-		data = buffer[loop_count];
-		
-		bit_counter = 8;
-		do {
-			feedback_bit = (crc ^ data) & 0x01;
-			
-			if ( feedback_bit == 0x01 ) {
-				crc = crc ^ 0x18;	             //0X18 = X^8+X^5+X^4+X^0
-			}
-			crc = (crc >> 1) & 0x7F;
-			if ( feedback_bit == 0x01 ) {
-				crc = crc | 0x80;
-			}
-			
-			data = data >> 1;
-			bit_counter--;
-			
-		} while (bit_counter > 0);
-	}
-
-	return crc;
-}
 
 void RntNsp::tick(int state) {
 	uint64_t tick = duration_cast<microseconds>(high_resolution_clock::now().time_since_epoch()).count();
@@ -93,7 +62,7 @@ void RntNsp::tick(int state) {
 
 		frame++;
 		system ("clear");
-                cout<<"Frame: "<<frame<<", ";
+		cout<<"Frame: "<<frame<<", ";
 
 		bool ok = true;
 
@@ -129,4 +98,38 @@ void RntNsp::tick(int state) {
                 if(ok) cout<<"H: "<<(rh/10)<<"."<<(rh%10)<<" %"<<endl;
 	}
 
+}
+
+
+uint8_t crc8(uint8_t *buffer, uint8_t size) {
+
+	uint8_t	 crc = 0;
+	uint8_t loop_count;
+	uint8_t  bit_counter;
+	uint8_t  data;
+	uint8_t  feedback_bit;
+
+	for (loop_count = 0; loop_count != size; loop_count++)
+	{
+		data = buffer[loop_count];
+
+		bit_counter = 8;
+		do {
+			feedback_bit = (crc ^ data) & 0x01;
+
+			if ( feedback_bit == 0x01 ) {
+				crc = crc ^ 0x18;	             //0X18 = X^8+X^5+X^4+X^0
+			}
+			crc = (crc >> 1) & 0x7F;
+			if ( feedback_bit == 0x01 ) {
+				crc = crc | 0x80;
+			}
+
+			data = data >> 1;
+			bit_counter--;
+
+		} while (bit_counter > 0);
+	}
+
+	return crc;
 }
