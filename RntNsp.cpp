@@ -117,7 +117,10 @@ void RntNsp::tick(int state) {
 		cout<<"Frame: "<<++frame<<endl;
 		cout<<"T: "<<(temp/10)<<"."<<(temp%10)<<" °C"<<endl;
 		cout<<"H: "<<(rh/10)<<"."<<(rh%10)<<" %"<<endl;
-		cout<<"Errors: "<<(errTime+errFrame+errHeader+errCrc)<<" ("<<((errTime+errFrame+errHeader+errCrc)*100)/frame<<" %)"<<" (Time: "<<errTime<<" Frame: "<<errFrame<<" Header: "<<errHeader<<" Crc: "<<errCrc<<")"<<endl;
+		uint32_t total = (errTime+errFrame+errHeader+errCrc);
+		float proc = (total * 10000)/frame;
+		proc /= 100;
+		cout<<"Errors: "<<total<<" ("<<proc<<" %)"<<" (Time: "<<errTime<<" Frame: "<<errFrame<<" Header: "<<errHeader<<" Crc: "<<errCrc<<")"<<endl;
 	}
 
 }
