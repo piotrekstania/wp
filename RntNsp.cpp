@@ -13,8 +13,8 @@ using namespace std::chrono;
 // 	- bit 1:  700 us (600..800)
 // 	- stop:	 2000 us (1900..2100)
 
-#define START_MIN		4900
-#define START_MAX		5100
+#define START_MIN		4500
+#define START_MAX		5500
 
 #define BIT0_MIN		200
 #define BIT0_MAX		400
@@ -28,9 +28,12 @@ using namespace std::chrono;
 
 void RntNsp::tick(int state) {
 	uint64_t tick = duration_cast<microseconds>(high_resolution_clock::now().time_since_epoch()).count();
-	uint64_t diff = tick - lastTick;
+	uint64_t diff = (tick - lastTick);
 	lastTick = tick;
 
-	if(state == 0) return;
-	cout<<diff<<endl;
+	if(state == 1) return;
+
+	if((diff >= START_MIN) && (diff <= START_MAX)) cout<<"Reset!"<<endl;
+	else if((diff >= BIT0_MIN) && (diff <= BIT0_MAX)) cout<<"0"<<endl;
+	else if((diff >= BIT1_MIN) && (diff <= BIT1_MAX)) cout<<"1"<<endl;
 }
