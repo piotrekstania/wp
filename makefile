@@ -1,5 +1,5 @@
 CXX=g++
-CXXFLAGS=-g -std=c++11 -Wall -O2 -lwiringPi
+CXXFLAGS=-g -std=c++11 -Wall -lwiringPi
 BIN=prog
 
 SRC=$(wildcard *.cpp)
