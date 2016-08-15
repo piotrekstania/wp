@@ -7,6 +7,16 @@ using namespace std::chrono;
 
 RntNsp::RntNsp() {
 	clearBuffer();
+	timeout = 10;
+}
+
+void RntNsp::setTimeout(uint32_t t) {
+	if(t > 100) t = 100;
+	timeout = t;
+}
+
+uint64_t RntNsp::getTimestamp() {
+	return (uint64_t)system_clock::now().time_since_epoch();
 }
 
 

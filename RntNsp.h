@@ -24,15 +24,13 @@
 #define NSP_BIT0_MIN		 400
 #define NSP_BIT0_MAX		 700
 
-
+//wszystkie wrtosci parametrow razy 10
 class RntNsp {
 
 	private:
 
 		typedef struct {
 			int16_t value;
-			int16_t min;
-			int16_t max;
 			uint64_t timestamp;
 		} Param;
 
@@ -41,11 +39,13 @@ class RntNsp {
 		Param hppl;
 		Param rh;
 		Param ah;
+		Param dp;
 
 		uint64_t lastTick;
 		uint64_t lastFrame;
 
 		uint32_t frameCounter;
+		uint32_t timeout;
 
 		uint8_t bit;
 		uint8_t byte;
@@ -64,6 +64,7 @@ class RntNsp {
 		void clearBuffer();
 		void checkBuffer();
 
+
 	public:
 
 		enum Parameter {ParamTemp, ParamRH, ParamAH, ParamPress, ParamHPPL};
@@ -72,12 +73,14 @@ class RntNsp {
 		RntNsp();
 
 		void tick(int state);
-		void setRange(Parameter p, int16_t min, int16_t max);
+		void setTimeout(uint32_t t);
 		bool isValid(Parameter p);
 		int16_t getParam(Parameter p);
 		uint32_t getError(Error e);
 		uint64_t getLastFrameTime();
 		uint32_t getFrameCounter();
+
+		uint64_t getTimestamp();
 
 };
 

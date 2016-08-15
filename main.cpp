@@ -25,6 +25,7 @@ int main(int argc, const char* argv[]) {
 
 	while(1) {
 		system("clear");
+		
 		delay(1000);
 	}
 	return 0;
