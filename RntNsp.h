@@ -6,17 +6,23 @@
 //wielkosc bufora musi byc rowna dlugosci ramki
 #define NSP_BUFF_SIZE		20
 
-#define NSP_START_MIN		4000
-#define NSP_START_MAX		6000
+Ramka
+- start 2000 us
+- stop  4000 us
+- bit1  1000 us
+- bit1   500 us
 
-#define NSP_STOP_MIN		1900
-#define NSP_STOP_MAX		2100
+#define NSP_START_MIN		1500
+#define NSP_START_MAX		3000
 
-#define NSP_BIT0_MIN		250
-#define NSP_BIT0_MAX		649
+#define NSP_STOP_MIN		3500
+#define NSP_STOP_MAX		5000
 
-#define NSP_BIT1_MIN		650
-#define NSP_BIT1_MAX		1100
+#define NSP_BIT1_MIN		 900
+#define NSP_BIT1_MAX		1200
+
+#define NSP_BIT0_MIN		 400
+#define NSP_BIT0_MAX		 700
 
 
 class RntNsp {

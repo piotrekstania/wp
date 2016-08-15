@@ -23,6 +23,9 @@ int main(int argc, const char* argv[]) {
 	pullUpDnControl(NSP_PIN, PUD_UP);
 	wiringPiISR(NSP_PIN, INT_EDGE_BOTH, &nspISR);
 
-	pause();
+	while(1) {
+		system("clear");
+		delay(1000);
+	}
 	return 0;
 }

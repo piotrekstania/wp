@@ -69,7 +69,6 @@ void RntNsp::tick(int state) {
 	}
 }
 
-
 uint8_t RntNsp::crc8(uint8_t *buffer, uint8_t size) {
 
 	uint8_t	 crc = 0;
