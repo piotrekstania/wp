@@ -25,7 +25,7 @@ int main(int argc, const char* argv[]) {
 
 	while(1) {
 		system("clear");
-		
+		cout<<nsp.getTimestamp()<<endl;
 		delay(1000);
 	}
 	return 0;
