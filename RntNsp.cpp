@@ -45,6 +45,7 @@ uint32_t RntNsp::getError(Error e) {
 		case ErrCrc: return errCrc;
 		case ErrAll: return (errTime + errFrame + errHeader + errCrc);
 	}
+	return 0;
 }
 
 uint32_t RntNsp::getFrameCounter() {
