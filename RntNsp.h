@@ -63,7 +63,7 @@ class RntNsp {
 		uint8_t crc8(uint8_t *buffer, uint8_t size);
 		void clearBuffer();
 		void checkBuffer();
-
+		uint64_t getTimestamp();
 
 	public:
 
@@ -79,8 +79,6 @@ class RntNsp {
 		uint32_t getError(Error e);
 		uint64_t getLastFrameTime();
 		uint32_t getFrameCounter();
-
-		uint64_t getTimestamp();
 
 };
 

@@ -19,6 +19,22 @@ uint64_t RntNsp::getTimestamp() {
 	return (uint64_t)duration_cast<std::chrono::seconds>(system_clock::now().time_since_epoch()).count();
 }
 
+bool RntNsp::isValid(Parameter p) {
+	Param *pParam;
+
+	switch (p) {
+		case ParamTemp: pParam = temp; break;
+		case ParamRH: pParam = rh; break;
+		case ParamAH: pParam = ah; break;
+		case ParamPress: pParam = press; break;
+		case ParamHPPL: pParam = hppl; break;
+		case ParamDP: pParam = dp; break;
+	}
+
+	if((getTimestamp() - pParm->timestamp) <= timeout) return true;
+	return false;
+}
+
 
 void RntNsp::clearBuffer() {
 	memset(buff, 0, NSP_BUFF_SIZE);
@@ -35,7 +51,7 @@ void RntNsp::checkBuffer() {
 	else if((buff[0] != '$') || (buff[NSP_BUFF_SIZE-1] != '#')) errHeader++;
 	else if(crc8(buff, NSP_BUFF_SIZE-2) != buff[NSP_BUFF_SIZE-2]) errCrc++;
 	else {
-		//dekodowanie ramki
+
 	}
 
 	clearBuffer();
