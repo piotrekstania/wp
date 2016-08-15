@@ -5,6 +5,7 @@
 
 using namespace std::chrono;
 
+
 RntNsp::RntNsp() {
 	clearBuffer();
 	timeout = 10;
@@ -33,6 +34,21 @@ bool RntNsp::isValid(Parameter p) {
 
 	if((getTimestamp() - pParam->timestamp) <= timeout) return true;
 	return false;
+}
+
+
+uint32_t RntNsp::getError(Error e) {
+	switch(e) {
+		case ErrTime: return errTime;
+		case ErrFrame: return errFrame;
+		case ErrHeader: return errHeader;
+		case ErrCrc: return errCrc;
+		case ErrAll: return (errTime + errFrame + errHeader + errCrc);
+	}
+}
+
+uint32_t RntNsp::getFrameCounter() {
+	return frameCounter;
 }
 
 

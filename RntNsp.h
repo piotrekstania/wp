@@ -68,7 +68,7 @@ class RntNsp {
 	public:
 
 		enum Parameter {ParamTemp, ParamRH, ParamAH, ParamPress, ParamHPPL, ParamDP};
-		enum Error {ErrTime, ErrFrame, ErrHeader, ErrCrc};
+		enum Error {ErrAll, ErrTime, ErrFrame, ErrHeader, ErrCrc};
 
 		RntNsp();
 
@@ -77,7 +77,6 @@ class RntNsp {
 		bool isValid(Parameter p);
 		int16_t getParam(Parameter p);
 		uint32_t getError(Error e);
-		uint64_t getLastFrameTime();
 		uint32_t getFrameCounter();
 
 };
