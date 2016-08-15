@@ -64,13 +64,14 @@ void RntNsp::clearBuffer() {
 }
 
 void RntNsp::checkBuffer() {
-	frameCounter++;
+
 
 	if(byte != 0) errFrame++;
 	else if((buff[0] != '$') || (buff[NSP_BUFF_SIZE-1] != '#')) errHeader++;
 	else if(crc8(buff, NSP_BUFF_SIZE-2) != buff[NSP_BUFF_SIZE-2]) errCrc++;
 	else {
 		//dekodowanie ramki
+		frameCounter++;
 	}
 
 	clearBuffer();

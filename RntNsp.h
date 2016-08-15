@@ -18,11 +18,11 @@
 #define NSP_STOP_MIN		3500
 #define NSP_STOP_MAX		5000
 
-#define NSP_BIT1_MIN		 900
-#define NSP_BIT1_MAX		1300
+#define NSP_BIT1_MIN		 800
+#define NSP_BIT1_MAX		1200
 
-#define NSP_BIT0_MIN		 400
-#define NSP_BIT0_MAX		 800
+#define NSP_BIT0_MIN		 300
+#define NSP_BIT0_MAX		 700
 
 //wszystkie wrtosci parametrow razy 10
 class RntNsp {
