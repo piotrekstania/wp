@@ -4,7 +4,7 @@
 #include <cstdint>
 
 //wielkosc bufora musi byc rowna dlugosci ramki
-#define NSP_BUFF_SIZE		20
+#define NSP_BUFF_SIZE		10
 
 // Ramka
 // - start 2000 us
@@ -19,10 +19,10 @@
 #define NSP_STOP_MAX		5000
 
 #define NSP_BIT1_MIN		 900
-#define NSP_BIT1_MAX		1200
+#define NSP_BIT1_MAX		1300
 
 #define NSP_BIT0_MIN		 400
-#define NSP_BIT0_MAX		 700
+#define NSP_BIT0_MAX		 800
 
 //wszystkie wrtosci parametrow razy 10
 class RntNsp {
@@ -42,7 +42,6 @@ class RntNsp {
 		Param dp;
 
 		uint64_t lastTick;
-		uint64_t lastFrame;
 
 		uint32_t frameCounter;
 		uint32_t timeout;

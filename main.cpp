@@ -25,6 +25,8 @@ int main(int argc, const char* argv[]) {
 
 	while(1) {
 		system("clear");
+		cout<<"Frames: "<<nsp.getFrameCounter()<<"/"<<nsp.getError(RntNsp::ErrAll)<<" (Time: "<<nsp.getError(RntNsp::ErrTime)<<", Frame: "<<nsp.getError(RntNsp::ErrFrame)<<", Header: "<<nsp.getError(RntNsp::ErrHeader)<<", Crc: "<<nsp.getError(RntNsp::ErrCrc)<<")"<<endl;
+
 		delay(1000);
 	}
 	return 0;

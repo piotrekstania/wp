@@ -2,8 +2,10 @@
 #include <cstring>
 #include <wiringPi.h>
 #include "RntNsp.h"
+#include <iostream>
 
 using namespace std::chrono;
+using namespace std;
 
 
 RntNsp::RntNsp() {
@@ -68,7 +70,7 @@ void RntNsp::checkBuffer() {
 	else if((buff[0] != '$') || (buff[NSP_BUFF_SIZE-1] != '#')) errHeader++;
 	else if(crc8(buff, NSP_BUFF_SIZE-2) != buff[NSP_BUFF_SIZE-2]) errCrc++;
 	else {
-
+		//dekodowanie ramki
 	}
 
 	clearBuffer();
@@ -83,10 +85,8 @@ void RntNsp::tick(int state) {
 	if((state == 0) || (stop == true)) return;
 
 	if((diff >= NSP_START_MIN) && (diff <= NSP_START_MAX)) {
-		if((bit != 0) || (byte != 0)) {
-			errFrame++;
-			clearBuffer();
-		}
+		if((bit != 0) || (byte != 0)) errFrame++;
+		clearBuffer();
 		start = true;
 		return;
 	}
