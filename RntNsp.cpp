@@ -16,7 +16,7 @@ void RntNsp::setTimeout(uint32_t t) {
 }
 
 uint64_t RntNsp::getTimestamp() {
-	return (uint64_t)system_clock::now().time_since_epoch();
+	return (uint64_t)duration_cast<std::chrono::seconds>(system_clock::now().time_since_epoch()).count();
 }
 
 
