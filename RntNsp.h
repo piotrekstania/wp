@@ -6,11 +6,11 @@
 //wielkosc bufora musi byc rowna dlugosci ramki
 #define NSP_BUFF_SIZE		20
 
-Ramka
-- start 2000 us
-- stop  4000 us
-- bit1  1000 us
-- bit1   500 us
+// Ramka
+// - start 2000 us
+// - stop  4000 us
+// - bit1  1000 us
+// - bit1   500 us
 
 #define NSP_START_MIN		1500
 #define NSP_START_MAX		3000
