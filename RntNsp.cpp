@@ -23,15 +23,15 @@ bool RntNsp::isValid(Parameter p) {
 	Param *pParam;
 
 	switch (p) {
-		case ParamTemp: pParam = temp; break;
-		case ParamRH: pParam = rh; break;
-		case ParamAH: pParam = ah; break;
-		case ParamPress: pParam = press; break;
-		case ParamHPPL: pParam = hppl; break;
-		case ParamDP: pParam = dp; break;
+		case ParamTemp: pParam = &temp; break;
+		case ParamRH: pParam = &rh; break;
+		case ParamAH: pParam = &ah; break;
+		case ParamPress: pParam = &press; break;
+		case ParamHPPL: pParam = &hppl; break;
+		case ParamDP: pParam = &dp; break;
 	}
 
-	if((getTimestamp() - pParm->timestamp) <= timeout) return true;
+	if((getTimestamp() - pParam->timestamp) <= timeout) return true;
 	return false;
 }
 

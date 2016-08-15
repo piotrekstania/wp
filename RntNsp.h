@@ -67,7 +67,7 @@ class RntNsp {
 
 	public:
 
-		enum Parameter {ParamTemp, ParamRH, ParamAH, ParamPress, ParamHPPL};
+		enum Parameter {ParamTemp, ParamRH, ParamAH, ParamPress, ParamHPPL, ParamDP};
 		enum Error {ErrTime, ErrFrame, ErrHeader, ErrCrc};
 
 		RntNsp();
